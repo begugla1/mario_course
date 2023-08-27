@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "trading-course"
+version = "0.1.0"
+description = ""
+authors = ["Lord Divan <darveter667@gmail.com>"]
+readme = "README.md"
+packages = [{include = "trading_course"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = {extras = ["all"], version = "^0.103.0"}
+uvicorn = "^0.23.2"
+pytest = "^7.4.0"
+psycopg2-binary = "^2.9.7"
+mypy = "^1.5.1"
+sqlalchemy = "^2.0.20"
+alembic = "^1.11.3"
+python-dotenv = "^1.0.0"
+fastapi-users = {extras = ["sqlalchemy"], version = "^12.1.2"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
