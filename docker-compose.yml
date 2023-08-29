@@ -26,6 +26,8 @@ services:
        - DB_PASSWORD=postgres
     depends_on:
       - database
+    ports:
+      - "8000:8000"
     
   pgadmin:
     container_name: pgadmin
