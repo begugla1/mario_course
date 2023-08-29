@@ -8,6 +8,25 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
       - "5432:5432"
+    expose:
+      - "5432"
+
+  web:
+    container_name: web-app
+    build: .
+    command: >
+      sh -c "alembic upgrade head"
+    volumes:
+      - .:/code
+    environment:
+       - DB_HOST=database
+       - DB_PORT=5432
+       - DB_NAME=postgres
+       - DB_USER=postgres
+       - DB_PASSWORD=postgres
+    depends_on:
+      - database
+    
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -18,3 +37,5 @@ services:
       - "5050:80"
     depends_on:
       - database
+    links:
+      - "database:db"
