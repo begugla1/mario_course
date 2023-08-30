@@ -29,8 +29,6 @@ services:
        - DB_NAME=postgres
        - DB_USER=postgres
        - DB_PASSWORD=postgres
-    ports:
-      - "8000:8000"
     depends_on:
       database:
         condition: service_healthy
