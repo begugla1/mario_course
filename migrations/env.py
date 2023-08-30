@@ -5,7 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-import config as alembic_config
+import migrations.config as alembic_config
 from trading_course.db.models.models import metadata
 
 # this is the Alembic Config object, which provides
