@@ -20,7 +20,9 @@ services:
       context: .
       dockerfile: trading_course/Dockerfile
     command: >
-      sh -c "alembic -c migrations/alembic.ini upgrade head"
+      sh -c "alembic -c migrations/alembic.ini revision --autogenerate --rev-id "init" \
+      && sed -i '1iimport fastapi_users_db_sqlalchemy' migrations/versions/init_.py
+      && alembic -c migrations/alembic.ini upgrade head"
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
