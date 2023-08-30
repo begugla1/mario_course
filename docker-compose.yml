@@ -10,9 +10,14 @@ services:
       - "5432:5432"
     expose:
       - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 4s
+      timeout: 3s
+      retries: 5
 
-  web:
-    container_name: web-app
+  migrations:
+    container_name: migrations
     build: .
     command: >
       sh -c "alembic upgrade head"
@@ -24,10 +29,12 @@ services:
        - DB_NAME=postgres
        - DB_USER=postgres
        - DB_PASSWORD=postgres
-    depends_on:
-      - database
     ports:
       - "8000:8000"
+    depends_on:
+      database:
+        condition: service_healthy
+        restart: false
     
   pgadmin:
     container_name: pgadmin
@@ -38,6 +45,8 @@ services:
     ports:
       - "5050:80"
     depends_on:
-      - database
+      migrations:
+        condition: service_completed_successfully
+        restart: false
     links:
       - "database:db"
