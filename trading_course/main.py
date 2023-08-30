@@ -8,8 +8,8 @@ main_router = APIRouter()
 main_router.include_router(auth_router)
 
 
-app = FastAPI(openapi_url="/api/docs")
+app = FastAPI(docs_url="/api/docs")
 app.include_router(main_router, prefix="/api")
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", reload=True)
+    uvicorn.run("main:app", reload=True, host="web_app", port=8000)

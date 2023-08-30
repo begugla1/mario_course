@@ -22,11 +22,13 @@ services:
     command: >
       sh -c "alembic -c migrations/alembic.ini upgrade head"
     environment:
-        - DB_HOST=${DB_HOST}
-        - DB_PORT=${DB_PORT}
-        - DB_NAME=${DB_NAME}
-        - DB_USER=${DB_USER}
-        - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - .:/code
     depends_on:
       database:
         condition: service_healthy
@@ -37,6 +39,8 @@ services:
     container_name: web_app
     command: >
       sh -c "python trading_course/main.py"
+    ports:
+      - "8000:8000"
     depends_on:
       migrations:
         condition: service_completed_successfully
@@ -59,6 +63,9 @@ services:
     depends_on:
       migrations:
         condition: service_completed_successfully
+        restart: false
+      web_app:
+        condition: service_started
         restart: false
     links:
       - "database:db"
