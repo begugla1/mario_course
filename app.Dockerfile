@@ -1,6 +1,6 @@
 FROM python:alpine3.17
 
-COPY .. /code
+COPY . /code
 WORKDIR /code
 
 RUN python -m venv env

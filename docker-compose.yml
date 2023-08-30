@@ -14,13 +14,14 @@ services:
       timeout: 3s
       retries: 5
 
-  migrations:
-    container_name: migrations
+  web_app:
+    container_name: web_app
     build:
       context: .
-      dockerfile: trading_course/Dockerfile
+      dockerfile: app.Dockerfile
     command: >
-      sh -c "alembic -c migrations/alembic.ini upgrade head"
+      sh -c "alembic -c migrations/alembic.ini upgrade head \
+      && python trading_course/main.py"
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
@@ -29,22 +30,14 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
     volumes:
       - .:/code
+    ports:
+      - "8000:8000"
     depends_on:
       database:
         condition: service_healthy
         restart: false
-    
-  web_app:
-    extends: migrations
-    container_name: web_app
-    command: >
-      sh -c "python trading_course/main.py"
-    ports:
-      - "8000:8000"
-    depends_on:
-      migrations:
-        condition: service_completed_successfully
-        restart: false
+    links:
+      - "database:database"
     
   pgadmin:
     container_name: pgadmin
@@ -61,9 +54,6 @@ services:
       start_period: 160s
       retries: 3
     depends_on:
-      migrations:
-        condition: service_completed_successfully
-        restart: false
       web_app:
         condition: service_started
         restart: false
