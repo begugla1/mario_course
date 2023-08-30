@@ -18,7 +18,7 @@ services:
     container_name: migrations
     build:
       context: .
-      dockerfile: migrations/Dockerfile
+      dockerfile: trading_course/Dockerfile
     command: >
       sh -c "alembic -c migrations/alembic.ini upgrade head"
     environment:
@@ -30,6 +30,16 @@ services:
     depends_on:
       database:
         condition: service_healthy
+        restart: false
+    
+  web_app:
+    extends: migrations
+    container_name: web_app
+    command: >
+      sh -c "python trading_course/main.py"
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
         restart: false
     
   pgadmin:

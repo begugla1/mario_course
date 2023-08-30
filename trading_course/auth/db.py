@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.orm import DeclarativeBase
 
-DATABASE_URL = "postgres+asyncpg://{}:{}@{}:{}/{}".format(
+DATABASE_URL = "postgresql+asyncpg://{}:{}@{}:{}/{}".format(
     os.environ.get("DB_USER", "postgres"),
     os.environ.get("DB_PASSWORD", "postgres"),
     os.environ.get("DB_HOST", "database"),
@@ -28,7 +28,7 @@ class User(SQLAlchemyBaseUserTableUUID, Base):
 
 
 engine = create_async_engine(DATABASE_URL)
-async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
+async_session_maker = async_sessionmaker(engine)
 
 
 async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
