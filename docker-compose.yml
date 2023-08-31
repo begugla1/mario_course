@@ -36,8 +36,6 @@ services:
       database:
         condition: service_healthy
         restart: false
-    links:
-      - "database:database"
     
   pgadmin:
     container_name: pgadmin
