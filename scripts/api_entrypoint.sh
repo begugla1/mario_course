@@ -1,4 +1,4 @@
 #!/bin/bash
-cd /code/api
+cd /code/trading_course
 alembic -c migrations/alembic.ini upgrade head
-python trading_course/main.py
+python api/main.py
