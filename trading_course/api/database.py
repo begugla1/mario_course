@@ -1,9 +1,10 @@
+from typing import AsyncGenerator
 import os
 
-from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.ext.asyncio import (
-    create_async_engine, async_sessionmaker
+    create_async_engine, async_sessionmaker, AsyncSession
 )
+from sqlalchemy.orm import declarative_base
 
 
 DATABASE_URL = "postgresql+asyncpg://{}:{}@{}:{}/{}".format(
@@ -14,10 +15,12 @@ DATABASE_URL = "postgresql+asyncpg://{}:{}@{}:{}/{}".format(
     os.environ.get("DB_NAME", "postgres"),
 )
 
-
-class Base(DeclarativeBase):
-    pass
-
-
 engine = create_async_engine(DATABASE_URL)
 async_session_maker = async_sessionmaker(engine)
+
+Base = declarative_base()
+
+
+async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
+    async with async_session_maker() as Session:
+        yield Session
