@@ -18,10 +18,7 @@ services:
     container_name: web_app
     build:
       context: .
-      dockerfile: app.Dockerfile
-    command: >
-      sh -c "alembic -c migrations/alembic.ini upgrade head \
-      && python trading_course/main.py"
+      dockerfile: api.Dockerfile
     environment:
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
