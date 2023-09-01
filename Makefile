@@ -1,4 +1,4 @@
-ckemakemigrations:
+makemigrations:
 	docker-compose exec web_app sh -c "cd src && alembic -c migrations/alembic.ini revision --autogenerate"
 migrate:
 	docker-compose exec web_app sh -c "cd src && alembic -c migrations/alembic.ini upgrade head"
