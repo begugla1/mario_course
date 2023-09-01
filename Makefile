@@ -8,7 +8,7 @@ clear_migrations:
 	rm -rf trading_course/migrations/versions/*.py
 
 up:
-	docker-compose up
+	docker-compose up -d
 stop:
 	docker-compose stop
 down: clear_migrations
