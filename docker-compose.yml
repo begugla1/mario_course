@@ -11,7 +11,7 @@ services:
       - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 4s
+      interval: 3s
       timeout: 3s
       retries: 5
 
