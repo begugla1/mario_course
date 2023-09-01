@@ -1,3 +1,4 @@
+import os
 import uuid
 
 from fastapi import Depends, Request
@@ -11,7 +12,7 @@ from fastapi_users.db import SQLAlchemyUserDatabase
 
 from .models import User, get_user_db
 
-SECRET = "SECRET"
+SECRET = os.environ.get("JWT_SECRET", "undefined-secret")
 
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):

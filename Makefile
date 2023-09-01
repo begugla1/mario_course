@@ -4,11 +4,13 @@ stop:
 	docker-compose stop
 down:
 	docker-compose down
+
 makemigrations:
-	docker-compose exec web_app sh -c "cd trading_course && PYTHONPATH=api alembic -c migrations/alembic.ini revision --autogenerate"
+	docker-compose exec web_app sh -c "cd trading_course && alembic -c migrations/alembic.ini revision --autogenerate"
 migrate:
-	docker-compose exec web_app sh -c "cd trading_course && PYTHONPATH=api alembic -c migrations/alembic.ini upgrade head"
+	docker-compose exec web_app sh -c "cd trading_course && alembic -c migrations/alembic.ini upgrade head"
 mm: makemigrations migrate
-	echo "It's done"
-clearm:
+
+clear_migrations: 
 	rm -rf trading_course/migrations/versions/*.py
+
