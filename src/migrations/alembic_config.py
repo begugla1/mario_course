@@ -2,7 +2,7 @@ import sys
 import os
 
 
-sys.path.append("/code/trading_course/api")
+sys.path.append("/code/src/api")
 
 DB_HOST: str = os.environ.get("DB_HOST", "database")
 DB_PORT: str = os.environ.get("DB_PORT", "5432")
