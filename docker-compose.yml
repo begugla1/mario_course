@@ -1,6 +1,8 @@
-version: '1.1'
+version: '1.2'
 services:
   database:
+    networks:
+      - backend
     container_name: postgres_db
     image: postgres:13.3
     environment:
@@ -16,6 +18,8 @@ services:
       retries: 5
 
   web_app:
+    networks:
+      - backend
     container_name: web_app
     restart: always
     build:
@@ -38,6 +42,8 @@ services:
         restart: false
     
   pgadmin:
+    networks:
+      - backend
     container_name: pgadmin
     image: dpage/pgadmin4
     environment:
@@ -57,3 +63,7 @@ services:
         restart: false
     links:
       - "database:db"
+
+networks:
+  backend:
+    driver: bridge
