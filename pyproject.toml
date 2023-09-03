@@ -17,6 +17,8 @@ uvicorn = "^0.23.2"
 pydantic = "^2.3.0"
 pip = "^23.2.1"
 setuptools = "^68.1.2"
+celery = "^5.3.1"
+redis = "^5.0.0"
 
 
 [build-system]

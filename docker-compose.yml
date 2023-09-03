@@ -5,10 +5,8 @@ services:
       - backend
     container_name: postgres_db
     image: postgres:13.3
-    environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    env_file:
+      - .env
     ports:
       - "5432:5432"
     healthcheck:
@@ -25,13 +23,9 @@ services:
     build:
       context: .
       dockerfile: api.Dockerfile
-    environment:
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - JWT_SECRET=${JWT_SECRET}
+    entrypoint: ["sh", "scripts/api_entrypoint.sh"]
+    env_file:
+      - .env
     volumes:
       - .:/code
     ports:
@@ -41,14 +35,41 @@ services:
         condition: service_healthy
         restart: false
     
+  redis:
+    networks:
+      - backend
+    container_name: redis
+    image: redis:7.2-alpine
+    depends_on:
+      web_app:
+        condition: service_started
+        restart: false
+    healthcheck:
+      test: ["CMD", "redis-cli","ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  celery_worker:
+    networks:
+      - backend
+    container_name: celery_worker
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    entrypoint: ["sh", "scripts/worker_entrypoint.sh"]
+    depends_on:
+      redis:
+        condition: service_healthy
+        restart: false
+
   pgadmin:
     networks:
       - backend
     container_name: pgadmin
     image: dpage/pgadmin4
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    env_file:
+      - .env
     ports:
       - "5050:80"
     healthcheck:

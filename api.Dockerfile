@@ -9,5 +9,4 @@ COPY . /code
 WORKDIR /code
 RUN pip install -r requirements.txt
 
-RUN chmod a+x scripts/api_entrypoint.sh
-ENTRYPOINT [ "sh", "scripts/api_entrypoint.sh" ]
+RUN chmod a+x scripts/*.sh
