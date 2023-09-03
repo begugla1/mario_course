@@ -11,7 +11,7 @@ services:
       - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 3s
+      interval: 2s
       timeout: 3s
       retries: 5
 
@@ -22,7 +22,7 @@ services:
     restart: always
     build:
       context: .
-      dockerfile: api.Dockerfile
+      dockerfile: backend.Dockerfile
     entrypoint: ["sh", "scripts/api_entrypoint.sh"]
     env_file:
       - .env
@@ -46,7 +46,7 @@ services:
         restart: false
     healthcheck:
       test: ["CMD", "redis-cli","ping"]
-      interval: 3s
+      interval: 2s
       timeout: 3s
       retries: 5
 
@@ -56,12 +56,34 @@ services:
     container_name: celery_worker
     build:
       context: .
-      dockerfile: api.Dockerfile
+      dockerfile: backend.Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - .:/code
     entrypoint: ["sh", "scripts/worker_entrypoint.sh"]
     depends_on:
       redis:
         condition: service_healthy
         restart: false
+  
+  flower:
+    networks:
+      - backend
+    container_name: flower
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - .:/code
+    entrypoint: ["sh", "scripts/flower_entrypoint.sh"]
+    depends_on:
+      - celery_worker
+      - web_app
+    ports:
+      - "5555:5555"
 
   pgadmin:
     networks:
