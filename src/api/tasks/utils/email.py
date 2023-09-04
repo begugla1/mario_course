@@ -1,6 +1,6 @@
 from email.message import EmailMessage
 
-import config
+import global_config
 
 
 def get_email_template(
@@ -17,6 +17,7 @@ def get_email_template(
     email["From"] = from_addr
     email["To"] = to_addr
 
-    email.set_content(f"Hello there, {username}! I\'m {config.SMTP_USER}!")
+    email.set_content(f"Hello there, {username}! "
+                      f"I\'m {global_config.SMTP_USER}!")
 
     return email

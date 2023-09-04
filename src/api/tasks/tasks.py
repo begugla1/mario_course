@@ -1,6 +1,6 @@
 import smtplib
 
-import config
+import global_config
 from .utils.email import get_email_template
 from celery_app import celery
 
@@ -11,8 +11,11 @@ def send_email(username: str) -> None:
     Sends email to anybody
     """
     email = get_email_template(
-        config.SMTP_USER, config.SMTP_USER, "FastAPI Course", username
+        global_config.SMTP_USER, global_config.SMTP_USER, "FastAPI Course",
+        username
     )
-    with smtplib.SMTP_SSL(config.SMTP_HOST, config.SMTP_PORT) as server:
-        server.login(config.SMTP_USER, config.SMTP_PASSWORD)
+    with smtplib.SMTP_SSL(
+        global_config.SMTP_HOST, global_config.SMTP_PORT
+            ) as server:
+        server.login(global_config.SMTP_USER, global_config.SMTP_PASSWORD)
         server.send_message(email)

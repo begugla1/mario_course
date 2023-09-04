@@ -9,9 +9,7 @@ _EXCLUDED_DIRS = (
 
 
 def get_dirs_for_celery_tasks(
-    src_path: _DL,
-    *,
-    prefix: str = ""
+    src_path: _DL, *, prefix: str = ""
         ) -> list[_DL]:
     """
     Returns directories where will look for the tasks,
