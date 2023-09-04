@@ -1,6 +1,6 @@
 from sqlalchemy import MetaData
 
-from api.database import Base
+from database import Base
 from api.auth.models import *
 
 

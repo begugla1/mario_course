@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd /code/src/api
+cd /code/src
 celery -A celery_app.celery flower
