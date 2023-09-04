@@ -1,6 +1,6 @@
 from celery import Celery
 
-from utils.celery_tasks import get_dirs_for_celery_tasks
+from utils.celery import get_dirs_for_celery_tasks
 from global_config import REDIS_URL, API_DIR
 
 
