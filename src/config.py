@@ -10,5 +10,3 @@ SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
 SMTP_PORT = os.getenv("SMTP_PORT", "465")
 
 REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379")
-
-print(API_DIR)
