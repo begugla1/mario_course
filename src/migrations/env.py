@@ -6,9 +6,9 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
-from migrations import alembic_config
+import global_config as alembic_config
 
-from migrations.base_metadata import metadata
+from migrations.db_metadata import metadata
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -17,7 +17,7 @@ section = config.config_ini_section
 config.set_section_option(section, "DB_HOST", alembic_config.DB_HOST)
 config.set_section_option(section, "DB_NAME", alembic_config.DB_NAME)
 config.set_section_option(section, "DB_PORT", alembic_config.DB_PORT)
-config.set_section_option(section, "DB_PASSWORD", alembic_config.DB_NAME)
+config.set_section_option(section, "DB_PASSWORD", alembic_config.DB_PASSWORD)
 config.set_section_option(section, "DB_USER", alembic_config.DB_USER)
 
 # Interpret the config file for Python logging.

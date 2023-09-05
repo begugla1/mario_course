@@ -1,18 +1,18 @@
 from typing import AsyncGenerator
-import os
 
 from sqlalchemy.ext.asyncio import (
     create_async_engine, async_sessionmaker, AsyncSession
 )
 from sqlalchemy.orm import declarative_base
 
+import global_config
 
 DATABASE_URL = "postgresql+asyncpg://{}:{}@{}:{}/{}".format(
-    os.environ.get("DB_USER", "postgres"),
-    os.environ.get("DB_PASSWORD", "postgres"),
-    os.environ.get("DB_HOST", "database"),
-    os.environ.get("DB_PORT", "5432"),
-    os.environ.get("DB_NAME", "postgres"),
+    global_config.DB_USER,
+    global_config.DB_PASSWORD,
+    global_config.DB_HOST,
+    global_config.DB_PORT,
+    global_config.DB_NAME
 )
 
 engine = create_async_engine(DATABASE_URL)
