@@ -99,9 +99,7 @@ services:
       start_period: 160s
       retries: 3
     depends_on:
-      web_app:
-        condition: service_started
-        restart: false
+      - web_app
     links:
       - database:db
 
