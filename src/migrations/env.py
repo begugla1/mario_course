@@ -6,7 +6,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
-import global_config as alembic_config
+import global_config
 
 from migrations.db_metadata import metadata
 # this is the Alembic Config object, which provides
@@ -14,11 +14,11 @@ from migrations.db_metadata import metadata
 config = context.config
 
 section = config.config_ini_section
-config.set_section_option(section, "DB_HOST", alembic_config.DB_HOST)
-config.set_section_option(section, "DB_NAME", alembic_config.DB_NAME)
-config.set_section_option(section, "DB_PORT", alembic_config.DB_PORT)
-config.set_section_option(section, "DB_PASSWORD", alembic_config.DB_PASSWORD)
-config.set_section_option(section, "DB_USER", alembic_config.DB_USER)
+config.set_section_option(section, "DB_HOST", global_config.DB_HOST)
+config.set_section_option(section, "DB_NAME", global_config.DB_NAME)
+config.set_section_option(section, "DB_PORT", global_config.DB_PORT)
+config.set_section_option(section, "DB_PASSWORD", global_config.DB_PASSWORD)
+config.set_section_option(section, "DB_USER", global_config.DB_USER)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
