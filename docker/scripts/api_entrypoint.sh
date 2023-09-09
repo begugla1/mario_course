@@ -1,5 +1,9 @@
 #!/bin/bash
 
-cd /code/src
-alembic -c migrations/alembic.ini upgrade head
+# Run latest migrations
+cd /code
+alembic upgrade head
+
+# Run main file
+cd src
 python main.py

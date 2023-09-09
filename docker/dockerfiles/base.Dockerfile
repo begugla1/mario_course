@@ -1,4 +1,4 @@
-# Base Dockerfile for all python services: api, celery, flower
+# Base Dockerfile for all dev python services (e.g: api, celery, flower)
 
 FROM python:alpine3.17
 
