@@ -1,7 +1,7 @@
 makemigrations:
-	docker-compose exec web_app sh -c "cd src && alembic -c migrations/alembic.ini revision --autogenerate"
+	docker-compose exec api sh -c "cd src && alembic -c migrations/alembic.ini revision --autogenerate"
 migrate:
-	docker-compose exec web_app sh -c "cd src && alembic -c migrations/alembic.ini upgrade head"
+	docker-compose exec api sh -c "cd src && alembic -c migrations/alembic.ini upgrade head"
 mm: makemigrations migrate
 
 clear_migrations: 
