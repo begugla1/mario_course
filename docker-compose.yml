@@ -23,7 +23,7 @@ services:
     build:
       context: .
       dockerfile: backend.Dockerfile
-    entrypoint: ["sh", "scripts/api_entrypoint.sh"]
+    entrypoint: ["sh", "scripts/docker/api_entrypoint.sh"]
     env_file:
       - .env
     volumes:
@@ -59,7 +59,7 @@ services:
       - .env
     volumes:
       - .:/code
-    entrypoint: ["sh", "scripts/worker_entrypoint.sh"]
+    entrypoint: ["sh", "scripts/docker/worker_entrypoint.sh"]
     depends_on:
       redis:
         condition: service_healthy
@@ -76,7 +76,7 @@ services:
       - .env
     volumes:
       - .:/code
-    entrypoint: ["sh", "scripts/flower_entrypoint.sh"]
+    entrypoint: ["sh", "scripts/docker/flower_entrypoint.sh"]
     depends_on:
       - celery_worker
       - web_app
