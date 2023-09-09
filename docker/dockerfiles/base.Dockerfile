@@ -1,3 +1,5 @@
+# Base Dockerfile for all python services: api, celery, flower
+
 FROM python:alpine3.17
 
 RUN mkdir /envs && cd /envs
@@ -9,4 +11,4 @@ COPY . /code
 WORKDIR /code
 RUN pip install -r requirements.txt
 
-RUN chmod a+x scripts/*.sh
+RUN chmod a+x docker/scripts/*.sh

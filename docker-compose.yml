@@ -15,15 +15,15 @@ services:
       timeout: 3s
       retries: 5
 
-  web_app:
+  api:
     networks:
       - backend
-    container_name: web_app
+    container_name: api
     restart: always
     build:
       context: .
-      dockerfile: backend.Dockerfile
-    entrypoint: ["sh", "scripts/docker/api_entrypoint.sh"]
+      dockerfile: docker/dockerfiles/base.Dockerfile
+    entrypoint: ["sh", "docker/scripts/api_entrypoint.sh"]
     env_file:
       - .env
     volumes:
@@ -41,7 +41,7 @@ services:
     container_name: redis
     image: redis:7.2-alpine
     depends_on:
-      - web_app
+      - api
     healthcheck:
       test: ["CMD", "redis-cli","ping"]
       interval: 2s
@@ -54,12 +54,12 @@ services:
     container_name: celery_worker
     build:
       context: .
-      dockerfile: backend.Dockerfile
+      dockerfile: docker/dockerfiles/base.Dockerfile
     env_file:
       - .env
     volumes:
       - .:/code
-    entrypoint: ["sh", "scripts/docker/worker_entrypoint.sh"]
+    entrypoint: ["sh", "docker/scripts/celery_worker_entrypoint.sh"]
     depends_on:
       redis:
         condition: service_healthy
@@ -71,15 +71,15 @@ services:
     container_name: flower
     build:
       context: .
-      dockerfile: backend.Dockerfile
+      dockerfile: docker/dockerfiles/base.Dockerfile
     env_file:
       - .env
     volumes:
       - .:/code
-    entrypoint: ["sh", "scripts/docker/flower_entrypoint.sh"]
+    entrypoint: ["sh", "docker/scripts/flower_entrypoint.sh"]
     depends_on:
       - celery_worker
-      - web_app
+      - api
     ports:
       - 5555:5555
 
@@ -99,7 +99,7 @@ services:
       start_period: 160s
       retries: 3
     depends_on:
-      - web_app
+      - api
     links:
       - database:db
 
