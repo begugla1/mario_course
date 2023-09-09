@@ -8,7 +8,7 @@ clear_migrations:
 	rm -rf src/migrations/versions/*.py
 
 up:
-	docker-compose up -d
+	docker-compose up -d --remove-orphans
 stop:
 	docker-compose stop
 down: clear_migrations
