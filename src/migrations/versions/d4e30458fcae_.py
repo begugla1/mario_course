@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 04d7c113d9c9
+Revision ID: d4e30458fcae
 Revises: 
-Create Date: 2023-09-09 14:30:29.496116
+Create Date: 2023-09-09 19:55:26.721993
 
 """
 from typing import Sequence, Union
@@ -13,7 +13,7 @@ import fastapi_users_db_sqlalchemy
 
 
 # revision identifiers, used by Alembic.
-revision: str = '04d7c113d9c9'
+revision: str = 'd4e30458fcae'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
