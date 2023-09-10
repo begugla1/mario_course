@@ -13,7 +13,7 @@ def get_dirs_for_celery_tasks(
     src_path: _DP, *, prefix: str = ""
         ) -> list[_MD]:
     """
-    Returns directories where will look for the tasks,
+    Returns directories where celery will look for the tasks,
     you can define prefix from directories if you want
     """
     dirlist: list[_MD] = []
