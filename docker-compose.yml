@@ -78,7 +78,6 @@ services:
     entrypoint: ["sh", "docker/scripts/flower_entrypoint.sh"]
     depends_on:
       - celery_worker
-      - api
     ports:
       - 5555:5555
 
