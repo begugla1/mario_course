@@ -1,4 +1,4 @@
-# mario_course
+# partialy proper acrhitecture of project
 **Because of**
 
-*My own base template for ordinary fastapi super puper app with docker*
+*My own base template for ordinary fastapi app with docker*
